@@ -1,19 +1,41 @@
-# BugBug Meme Page
+# QA Comic: The Legend of Bugs
 
-This repo contains a static meme page (`index.html`) ready for GitHub Pages.
+A funny single-page comic meme built with **vanilla HTML, CSS, and JavaScript**.
 
-## GitHub Pages URL
+## Files
 
-After pushing this repository to GitHub and enabling Pages, your site URL will be one of:
+- `index.html`
+- `styles.css`
+- `script.js`
 
-- `https://<your-username>.github.io/BugBug/` (project site)
-- `https://<your-org>.github.io/BugBug/` (organization project site)
+No framework, no build, no external libraries.
 
-If you use a repository named `<your-username>.github.io`, then the URL is:
+## Publish on GitHub Pages
 
-- `https://<your-username>.github.io/`
+1. Push this folder to a GitHub repository.
+2. Go to **Settings → Pages**.
+3. In **Build and deployment**, choose:
+   - **Source:** Deploy from a branch
+   - **Branch:** `main` (or your default branch), folder `/ (root)`
+4. Save.
+5. Wait 1–2 minutes, then open:
+   - `https://<your-username>.github.io/<repo-name>/`
 
-## Notes
+## Customize phrases
 
-- The included workflow `.github/workflows/deploy-pages.yml` deploys automatically on pushes to `main`, `master`, or `work`.
-- `index.html` is already configured as the homepage file.
+- Edit comic text in `index.html` for default panel lines and punchline area.
+- Edit random joke lines/SFX/captions arrays in `script.js`:
+  - `speech1Lines`
+  - `speech2Lines`
+  - `sfxLines`
+  - `captions`
+
+## Required punchline
+
+Arabic (kept exact):
+
+`مرة تيسرت كان بيغرق قعد يقول بج بج بح`
+
+English meaning:
+
+`Once a tester was drowning… he kept saying: bug bug bug.`
