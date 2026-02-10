@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QA Comic: The Legend of Bugs</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <h1>QA Comic: The Legend of Bugs</h1>
+        <p class="subtitle">A playful office meme for testers and their brave bug reports.</p>
+      </header>
+
+      <section class="controls" aria-label="comic controls">
+        <button id="funnierBtn" aria-label="Make comic funnier">Make it funnier 🎭</button>
+        <button id="langToggleBtn" aria-label="Toggle Arabic first or English first mode">Arabic-first mode</button>
+        <button id="playAudioBtn" aria-label="Play Arabic punchline audio">Play punchline 🔊</button>
+        <div class="counter" aria-live="polite">🐞 Bug Counter: <span id="bugCount">0</span></div>
+      </section>
+
+      <section class="comic" aria-label="Three panel tester comic">
+        <article class="panel tilt-left" id="panel1">
+          <span class="panel-tag" id="caption1">Panel 1: Morning Standup</span>
+          <p class="sfx" id="sfx1">BUG!!</p>
+          <div class="scene">
+            <div class="person qa">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="mouth"></div>
+            </div>
+            <div class="speech" id="speech1">"I found one tiny issue... and 27 cousins."</div>
+          </div>
+        </article>
+
+        <article class="panel tilt-right clickable" id="panel2" tabindex="0" role="button" aria-label="Click tester in water to increase bug counter">
+          <span class="panel-tag" id="caption2">Panel 2: Production Ocean</span>
+          <p class="sfx" id="sfx2">PANIC!</p>
+          <div class="scene">
+            <div class="person tester afloat">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="mouth worried"></div>
+            </div>
+            <div class="water"></div>
+            <div class="speech" id="speech2">"Why is this bug reproducing only on Fridays?!"</div>
+          </div>
+        </article>
+
+        <article class="panel tilt-left clickable" id="panel3" tabindex="0" role="button" aria-label="Click punchline panel to increase bug counter">
+          <span class="panel-tag" id="caption3">Panel 3: The Legend</span>
+          <p class="sfx" id="sfx3">SPLASH!</p>
+          <div class="scene punchline-scene">
+            <div class="big-bubble" id="punchlineBubble">
+              <p class="arabic big" id="arabicLine" dir="rtl">مرة تيسرت كان بيغرق قعد يقول بج بج بح</p>
+              <p class="english small" id="englishLine">Once a tester was drowning… he kept saying: bug bug bug.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <footer>
+        Made for mocking my friends 💛 — GitHub Pages ready
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
