@@ -218,59 +218,680 @@
       }
 
       button:hover { transform: translateY(-2px); }
+
+      /* =========================================================
+         Meme upgrades (QA culture edition)
+         ========================================================= */
+
+      .hero {
+        text-align: center;
+      }
+
+      h1#title {
+        user-select: none;
+        cursor: pointer;
+      }
+
+      .controls {
+        margin: 1rem auto 1.15rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+      }
+
+      /* Undo the base "single button centered" styling inside the controls row */
+      .controls button {
+        margin-top: 0;
+        display: inline-block;
+        margin-inline: 0;
+      }
+
+      .btn-secondary { background: #ffffff; }
+      .btn-danger { background: #ffced7; }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.52rem 0.75rem;
+        border: 3px solid #111;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.09);
+        box-shadow: 0.25rem 0.25rem 0 #000;
+        position: relative;
+      }
+
+      .pill strong {
+        color: #7dffb2;
+      }
+
+      .toast {
+        position: absolute;
+        top: -14px;
+        right: -6px;
+        background: #fff;
+        color: #111;
+        border: 2px solid #111;
+        border-radius: 999px;
+        padding: 0.2rem 0.55rem;
+        font-weight: 900;
+        font-size: 0.82rem;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .toast.show {
+        animation: toastUp 950ms ease forwards;
+      }
+
+      @keyframes toastUp {
+        0% { opacity: 0; transform: translateY(8px) scale(0.96); }
+        15% { opacity: 1; transform: translateY(0) scale(1); }
+        85% { opacity: 1; }
+        100% { opacity: 0; transform: translateY(-18px) scale(1.02); }
+      }
+
+      .excuseBox {
+        width: min(720px, 100%);
+        margin: 0 auto 1.2rem;
+        background: rgba(255, 255, 255, 0.09);
+        border: 3px solid #fff;
+        border-radius: 16px;
+        box-shadow: 0.35rem 0.35rem 0 #000;
+        padding: 0.85rem 0.95rem;
+      }
+
+      .excuseTag {
+        display: inline-block;
+        font-weight: 900;
+        background: var(--yellow);
+        color: #242424;
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+        border: 2px solid #111;
+      }
+
+      .excuseText {
+        margin: 0.55rem 0 0;
+        font-weight: 900;
+        font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+      }
+
+      /* Override grid to be 3 panels on desktop */
+      .comic-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .scene {
+        position: relative;
+        margin-top: 0.95rem;
+        min-height: 200px;
+      }
+
+      .character {
+        margin-top: 0;
+        box-shadow: 0.2rem 0.2rem 0 #000;
+      }
+
+      .character.dev { background: #a9b4ff; }
+      .character.qa { background: #8dffe3; }
+
+      .character .badge {
+        position: absolute;
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        color: #111;
+        border: 2px solid #111;
+        border-radius: 999px;
+        padding: 0.12rem 0.45rem;
+        font-weight: 900;
+        font-size: 0.78rem;
+        white-space: nowrap;
+      }
+
+      .smile.worried {
+        border-bottom: none;
+        border-top: 4px solid #111;
+        border-radius: 30px 30px 0 0;
+        top: 56px;
+        bottom: auto;
+      }
+
+      .clickHint {
+        position: absolute;
+        left: 0.9rem;
+        bottom: 0.9rem;
+        font-size: 0.85rem;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 1px 1px 0 #000;
+      }
+
+      .clickable { cursor: pointer; }
+
+      .clickable:focus-visible {
+        outline: 4px dashed var(--yellow);
+        outline-offset: 6px;
+      }
+
+      .panel { min-height: 270px; }
+
+      .speech {
+        top: 0.35rem;
+        width: 60%;
+        font-weight: 900;
+        box-shadow: 0.2rem 0.2rem 0 #000;
+      }
+
+      /* Panel 3 drama: animated water + floating bug bubbles */
+      .water {
+        position: absolute;
+        left: -18px;
+        right: -18px;
+        bottom: -20px;
+        height: 120px;
+        border-top: 4px solid #f8fdff;
+        border-radius: 40% 60% 0 0 / 50% 50% 0 0;
+        background: radial-gradient(circle at 20% 40%, #88f5ff 10%, #2ba8d6 65%, #0f6d9e 100%);
+        overflow: hidden;
+      }
+
+      .water::before {
+        content: "";
+        position: absolute;
+        inset: -40px -40px 0 -40px;
+        background: repeating-linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.12) 0 26px,
+          rgba(255, 255, 255, 0.02) 26px 52px
+        );
+        opacity: 0.4;
+        animation: wave 5.8s ease-in-out infinite;
+      }
+
+      @keyframes wave {
+        0% { transform: translateX(0); }
+        50% { transform: translateX(-38px); }
+        100% { transform: translateX(0); }
+      }
+
+      .bugBubbles {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .bugFloat {
+        position: absolute;
+        bottom: 18px;
+        filter: drop-shadow(1px 1px 0 #000);
+        opacity: 0;
+        animation: rise 2.8s ease-out forwards;
+      }
+
+      @keyframes rise {
+        0% { transform: translateY(0) scale(0.9) rotate(0deg); opacity: 0; }
+        15% { opacity: 1; }
+        100% { transform: translateY(-165px) scale(1.1) rotate(10deg); opacity: 0; }
+      }
+
+      .shake {
+        animation: shake 260ms ease-in-out;
+      }
+
+      @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-3px) rotate(-0.8deg); }
+        55% { transform: translateX(3px) rotate(0.8deg); }
+        100% { transform: translateX(0); }
+      }
+
+      /* Production Alarm Mode */
+      body.prod {
+        background:
+          radial-gradient(circle at 20% 20%, #4a0d1e 0, transparent 45%),
+          radial-gradient(circle at 80% 10%, #2b0011 0, transparent 40%),
+          linear-gradient(180deg, #1a0008, #0e1022);
+      }
+
+      .prodBanner {
+        display: none;
+        margin: 0.9rem auto 0;
+        width: min(720px, 100%);
+        border: 3px solid #fff;
+        border-radius: 14px;
+        padding: 0.7rem 0.85rem;
+        text-align: center;
+        font-weight: 1000;
+        letter-spacing: 0.08em;
+        box-shadow: 0.35rem 0.35rem 0 #000;
+        background: rgba(255, 0, 72, 0.18);
+      }
+
+      body.prod .prodBanner {
+        display: block;
+        animation: flash 620ms linear infinite;
+      }
+
+      @keyframes flash {
+        0%, 100% { color: #fff; background: rgba(255, 0, 72, 0.22); }
+        50% { color: #111; background: rgba(255, 230, 107, 0.85); }
+      }
+
+      .siren {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0;
+        mix-blend-mode: screen;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 0, 0, 0.18),
+          rgba(0, 170, 255, 0.18),
+          rgba(255, 0, 0, 0.18)
+        );
+      }
+
+      body.prod .siren {
+        opacity: 1;
+        animation: siren 1.1s linear infinite;
+      }
+
+      @keyframes siren {
+        0% { transform: translateX(-30%); }
+        100% { transform: translateX(30%); }
+      }
+
+      .easter {
+        display: none;
+        margin: 0.85rem auto 0;
+        width: min(720px, 100%);
+        border: 3px dashed var(--yellow);
+        border-radius: 14px;
+        padding: 0.8rem 0.9rem;
+        text-align: center;
+        background: rgba(255, 230, 107, 0.12);
+        box-shadow: 0.35rem 0.35rem 0 #000;
+        color: #fff;
+        font-weight: 1000;
+      }
+
+      .easter.show {
+        display: block;
+        animation: popIn 220ms ease-out;
+      }
+
+      @keyframes popIn {
+        from { transform: scale(0.98); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 1.2rem;
+        color: #c6d1ff;
+        font-weight: 900;
+      }
+
+      @media (max-width: 900px) {
+        .comic-grid { grid-template-columns: 1fr; }
+        .panel { min-height: 250px; }
+        .speech { width: 62%; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 1ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 1ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
     </style>
   </head>
   <body>
+    <div class="siren" aria-hidden="true"></div>
+
     <main class="wrap">
-      <h1>🧪 The Legend of <span class="bug-burst">Bug Bug Bug</span></h1>
-      <p class="subtitle">A tiny comic for every QA hero who ships chaos into production 👀</p>
+      <header class="hero">
+        <h1 id="title" title="Click me 5 times 😈">
+          🧪 The Legend of <span class="bug-burst">Bug Bug Bug</span>
+        </h1>
+        <p class="subtitle">
+          Egyptian QA culture edition: where “green” means “we didn’t look enough”.
+        </p>
+      </header>
 
-      <section class="comic-grid">
-        <article class="panel">
-          <span class="label">Panel 1</span>
-          <div class="character"><span class="smile"></span></div>
-          <div class="speech">"I test everything. Even my coffee has test cases."</div>
+      <div class="controls" aria-label="controls">
+        <div class="pill" id="bugPill" title="Click QA to find more bugs">
+          <span>🐞 Bugs Found Today:</span>
+          <strong id="bugCount">0</strong>
+          <span class="toast" id="bugToast" aria-live="polite"></span>
+        </div>
+
+        <button id="excuseBtn" type="button" class="btn-secondary">
+          Generate QA Excuse
+        </button>
+
+        <button id="prodBtn" type="button" class="btn-danger" aria-pressed="false">
+          🔥 Deploy to Production
+        </button>
+
+        <button id="audioBtn" type="button">
+          Say “bug bug bug” 🔊
+        </button>
+      </div>
+
+      <div class="excuseBox" role="status" aria-live="polite">
+        <span class="excuseTag">Excuse Generator</span>
+        <p class="excuseText" id="excuseText">
+          Click “Generate QA Excuse” to roll the next masterpiece.
+        </p>
+      </div>
+
+      <div class="prodBanner" id="prodBanner">🚨 PRODUCTION DOWN 🚨</div>
+      <div class="easter" id="easterEgg">
+        QA is always right. Developers are just confused testers.
+      </div>
+
+      <section class="comic-grid" aria-label="comic panels">
+        <article class="panel" id="panelDev">
+          <span class="label">Panel 1 — Developer</span>
+          <div class="scene">
+            <div class="character dev" aria-hidden="true">
+              <span class="smile"></span>
+              <span class="badge">DEV</span>
+            </div>
+            <div class="speech" id="devSpeech">“It works on my machine 🤡”</div>
+          </div>
         </article>
 
-        <article class="panel">
-          <span class="label">Panel 2</span>
-          <div class="character" style="background:#f7b9ff"><span class="smile"></span></div>
-          <div class="speech">"Prod is calm... suspiciously calm..."</div>
+        <article class="panel" id="panelQa">
+          <span class="label">Panel 2 — QA (click me)</span>
+          <div class="scene">
+            <div
+              class="character qa clickable"
+              id="qaAvatar"
+              role="button"
+              tabindex="0"
+              aria-label="QA character. Click to find a bug."
+            >
+              <span class="smile"></span>
+              <span class="badge">QA</span>
+            </div>
+            <div class="speech" id="qaSpeech">“Then deploy your machine to production.”</div>
+            <div class="clickHint">Click QA → +bugs</div>
+          </div>
         </article>
 
-        <article class="panel">
-          <span class="label">Panel 3</span>
-          <div class="character" style="background:#8dffe3"><span class="smile"></span></div>
-          <div class="speech" id="chantBubble">"بج... بج... بج..."</div>
-          <div class="splash"></div>
+        <article class="panel" id="panelProdOcean">
+          <span class="label">Panel 3 — Production Ocean</span>
+          <div class="scene">
+            <div class="character qa" id="drownAvatar" aria-hidden="true">
+              <span class="smile worried"></span>
+              <span class="badge">QA</span>
+            </div>
+
+            <div class="speech" id="chantBubble">“بج... بج... بج...”</div>
+            <div class="bugBubbles" id="bugBubbles" aria-hidden="true"></div>
+            <div class="water" aria-hidden="true"></div>
+          </div>
         </article>
       </section>
 
-      <section class="big-joke">
+      <section class="big-joke" aria-label="core joke">
+        <!-- Core joke must remain (kept exact) -->
         <div class="arabic">مرة تيستر كان بيغرق قعد يقول بج بج بج</div>
-        <p class="english">"Once a tester was drowning, he kept saying: bug bug bug."</p>
-        <button id="hypeBtn" type="button">Say “bug bug bug” 🔊</button>
+        <p class="english">
+          “Once a tester was drowning, he kept saying: bug bug bug.”
+        </p>
         <p class="subtitle" id="audioStatus" style="margin-top:.75rem;margin-bottom:0;font-size:.95rem"></p>
       </section>
+
+      <footer>
+        “QA doesn’t break the system… QA just reveals the truth.”
+      </footer>
     </main>
 
     <script>
-      const button = document.getElementById("hypeBtn");
-      const bubble = document.getElementById("chantBubble");
-      const statusEl = document.getElementById("audioStatus");
+      /*
+        =========================================================
+        Customize zone (phrases / jokes)
+        - Add/edit lines here to change the humor.
+        - Keep it workplace-friendly.
+        =========================================================
+      */
 
-      const spokenBug = "bug bug bug";
-      const chants = ["بج بج بج!!!", "BUG BUG BUG!!!", "🐞 BUG 🐞 BUG 🐞 BUG 🐞"];
-      let i = 0;
+      const jokes = {
+        dev: [
+          "“It works on my machine 🤡”",
+          "“I didn’t change anything… it just changed itself.”",
+          "“Passed locally ✅… so it’s basically done.”",
+          "“Staging is not real life يا QA…”"
+        ],
+        qa: [
+          "“Then deploy your machine to production.”",
+          "“Send me the machine… and a charger… and your blessings.”",
+          "“Ok… now reproduce it WITHOUT touching anything.”",
+          "“Don’t worry, I’ll open a ticket: Priority = yesterday.”"
+        ],
+        prodPanic: [
+          "“WHO DEPLOYED THIS?!”",
+          "“ROLLBACK ROLLBACK 😭”",
+          "“CALL THE DEV NOW!”",
+          "“It was GREEN in staging… wallahi.”",
+          "“Why is CPU 900%?!”",
+          "“Works as designed… who designed it?!”"
+        ],
+        excuseLines: [
+          "Can’t reproduce.",
+          "Need more logs.",
+          "Rejected: Missing steps.",
+          "Status: Waiting for backend.",
+          "It’s not a bug, it’s a feature.",
+          "Passed locally.",
+          "Works on my machine.",
+          "Please clear cache and try again.",
+          "Maybe it’s a network issue (always).",
+          "Scope changed mid-test, ya team.",
+          "Not a blocker… unless you click it.",
+          "بص… دي مش bug… دي “surprise requirement”."
+        ],
+        bugToasts: [
+          "+1 BUG 🐞",
+          "Critical! 🔥",
+          "Not Reproducible! 🙃",
+          "Works as Designed! 😇",
+          "Regression unlocked 🎯",
+          "Need more logs 📜",
+          "Blocked by ‘it was fine yesterday’ 🧠"
+        ],
+        chantLines: [
+          "“بج... بج... بج...”",
+          "“بج بج بج!!!”",
+          "“يا رب deploy يعدّي… بج…”"
+        ]
+      };
 
-      function setStatus(text) {
-        if (!statusEl) return;
-        statusEl.textContent = text || "";
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
       }
 
+      function randomItem(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      const els = {
+        title: document.getElementById("title"),
+        easter: document.getElementById("easterEgg"),
+        devSpeech: document.getElementById("devSpeech"),
+        qaSpeech: document.getElementById("qaSpeech"),
+        chantBubble: document.getElementById("chantBubble"),
+        excuseBtn: document.getElementById("excuseBtn"),
+        excuseText: document.getElementById("excuseText"),
+        prodBtn: document.getElementById("prodBtn"),
+        qaAvatar: document.getElementById("qaAvatar"),
+        drownAvatar: document.getElementById("drownAvatar"),
+        bugCount: document.getElementById("bugCount"),
+        bugPill: document.getElementById("bugPill"),
+        bugToast: document.getElementById("bugToast"),
+        bugBubbles: document.getElementById("bugBubbles"),
+        siren: document.querySelector(".siren"),
+        audioBtn: document.getElementById("audioBtn"),
+        audioStatus: document.getElementById("audioStatus")
+      };
+
+      const state = {
+        bugs: randomInt(50, 500),
+        prodMode: false,
+        titleClicks: 0,
+        bubbleTimer: null,
+        sirenTimer: null
+      };
+
+      els.bugCount.textContent = String(state.bugs);
+
+      function showToast(text) {
+        els.bugToast.textContent = text;
+        els.bugToast.classList.remove("show");
+        void els.bugToast.offsetWidth; // reflow to restart animation
+        els.bugToast.classList.add("show");
+      }
+
+      function shake(el) {
+        if (!el) return;
+        el.classList.remove("shake");
+        void el.offsetWidth;
+        el.classList.add("shake");
+      }
+
+      function spawnBugFloat() {
+        if (!els.bugBubbles) return;
+
+        const bug = document.createElement("div");
+        bug.className = "bugFloat";
+        bug.textContent = "🐞";
+
+        const x = randomInt(20, 90); // percent
+        bug.style.left = `${x}%`;
+        bug.style.animationDuration = `${randomInt(2400, 3300)}ms`;
+        bug.style.fontSize = `${randomInt(14, 20)}px`;
+
+        els.bugBubbles.appendChild(bug);
+        bug.addEventListener("animationend", () => bug.remove(), { once: true });
+      }
+
+      function bumpBugCount() {
+        state.bugs += 1;
+        els.bugCount.textContent = String(state.bugs);
+        showToast(randomItem(jokes.bugToasts));
+
+        shake(els.qaAvatar);
+        shake(els.bugPill);
+        shake(els.drownAvatar);
+
+        els.chantBubble.textContent = randomItem(jokes.chantLines);
+        spawnBugFloat();
+      }
+
+      function onClickableKeydown(event, action) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          action();
+        }
+      }
+
+      els.qaAvatar.addEventListener("click", bumpBugCount);
+      els.qaAvatar.addEventListener("keydown", (e) =>
+        onClickableKeydown(e, bumpBugCount)
+      );
+
+      function generateExcuse() {
+        const line = randomItem(jokes.excuseLines);
+        els.excuseText.textContent = state.prodMode
+          ? `🚨 ${line} (but in production).`
+          : line;
+
+        if (state.prodMode) {
+          els.devSpeech.textContent = randomItem(jokes.prodPanic);
+          els.qaSpeech.textContent = randomItem(jokes.prodPanic);
+        } else {
+          els.devSpeech.textContent = randomItem(jokes.dev);
+          els.qaSpeech.textContent = randomItem(jokes.qa);
+        }
+      }
+
+      els.excuseBtn.addEventListener("click", generateExcuse);
+
+      function setProdMode(enabled) {
+        state.prodMode = Boolean(enabled);
+        document.body.classList.toggle("prod", state.prodMode);
+        els.prodBtn.setAttribute("aria-pressed", String(state.prodMode));
+
+        if (state.prodMode) {
+          els.prodBtn.textContent = "🧯 Rollback to Safety";
+          els.devSpeech.textContent = randomItem(jokes.prodPanic);
+          els.qaSpeech.textContent = randomItem(jokes.prodPanic);
+          els.chantBubble.textContent = "“ROLLBACK ROLLBACK… بج؟”";
+          showToast("PROD MODE 🔥");
+
+          if (state.sirenTimer) clearInterval(state.sirenTimer);
+          state.sirenTimer = setInterval(() => {
+            if (!state.prodMode || !els.siren) return;
+            // Random-ish siren: tiny variations so it feels chaotic (visual only)
+            els.siren.style.opacity = String(0.55 + Math.random() * 0.45);
+            els.siren.style.filter = `hue-rotate(${randomInt(-18, 18)}deg)`;
+          }, 650);
+        } else {
+          els.prodBtn.textContent = "🔥 Deploy to Production";
+          els.devSpeech.textContent = "“It works on my machine 🤡”";
+          els.qaSpeech.textContent = "“Then deploy your machine to production.”";
+          els.chantBubble.textContent = "“بج... بج... بج...”";
+          showToast("Back to staging ✅");
+
+          if (state.sirenTimer) clearInterval(state.sirenTimer);
+          state.sirenTimer = null;
+          if (els.siren) {
+            els.siren.style.opacity = "";
+            els.siren.style.filter = "";
+          }
+        }
+      }
+
+      els.prodBtn.addEventListener("click", () => setProdMode(!state.prodMode));
+
+      /* Easter egg: click title 5 times */
+      els.title.addEventListener("click", () => {
+        state.titleClicks += 1;
+        if (state.titleClicks >= 5) {
+          els.easter.classList.add("show");
+          showToast("Easter egg unlocked 🥚");
+          state.titleClicks = 0;
+        } else {
+          shake(els.title);
+        }
+      });
+
+      // Gentle ambient bug bubbles (reduced-motion safe via CSS media query)
+      state.bubbleTimer = setInterval(() => {
+        if (Math.random() < (state.prodMode ? 0.7 : 0.28)) spawnBugFloat();
+      }, 900);
+
+      /* =========================================================
+         Text-to-speech: say "bug bug bug" (no external audio files)
+         ========================================================= */
+      const spokenBug = "bug bug bug";
       const supportsTts =
         "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
       const synth = supportsTts ? window.speechSynthesis : null;
+
+      function setAudioStatus(text) {
+        els.audioStatus.textContent = text || "";
+      }
 
       function pickVoice(voices, langStartsWith) {
         const target = (langStartsWith || "").toLowerCase();
@@ -289,8 +910,8 @@
 
       function ensureVoicesReady() {
         if (!synth) return Promise.resolve();
-
         refreshVoice();
+
         const voices = synth.getVoices ? synth.getVoices() : [];
         if (voices.length) return Promise.resolve();
 
@@ -303,7 +924,6 @@
             resolve();
           };
 
-          // Different browsers expose this in different ways.
           if (typeof synth.addEventListener === "function") {
             try {
               synth.addEventListener("voiceschanged", done, { once: true });
@@ -315,7 +935,6 @@
             } catch (e) {}
           }
 
-          // Fallback: don't wait forever.
           setTimeout(done, 600);
         });
       }
@@ -336,28 +955,31 @@
         if (cachedVoice) u.voice = cachedVoice;
 
         u.onerror = () => {
-          setStatus("Audio blocked. Unmute the tab / check system volume, then try again.");
+          setAudioStatus("No sound? Unmute the tab + check system volume, then click again.");
         };
-        u.onend = () => setStatus("");
+        u.onend = () => setAudioStatus("");
 
         synth.speak(u);
       }
 
       if (!supportsTts) {
-        setStatus("Your browser doesn't support text-to-speech on this page.");
+        setAudioStatus("Text-to-speech not supported in this browser.");
       } else {
         refreshVoice();
-        setStatus("Tip: if you hear nothing, unmute the tab and check your system volume.");
+        setAudioStatus("Tip: if you hear nothing, unmute the tab and check system volume.");
       }
 
-      button?.addEventListener("click", () => {
-        i = (i + 1) % chants.length;
-        if (bubble) bubble.textContent = `"${chants[i]}"`;
+      els.audioBtn.addEventListener("click", () => {
+        showToast("BUG BUG BUG 🔊");
+        shake(els.drownAvatar);
+        spawnBugFloat();
 
         if (!supportsTts) return;
-
         ensureVoicesReady().then(() => speak(spokenBug));
       });
+
+      // First load: generate one excuse so it feels alive
+      generateExcuse();
     </script>
   </body>
 </html>
