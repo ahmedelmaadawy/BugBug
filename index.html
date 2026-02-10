@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bug Bug Comic</title>
+    <style>
+      :root {
+        --bg: #0e1022;
+        --panel: #1a1f3b;
+        --accent: #6be6ff;
+        --accent-2: #ff66b3;
+        --text: #f8f9ff;
+        --yellow: #ffe66b;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: "Trebuchet MS", "Comic Sans MS", system-ui, sans-serif;
+        background:
+          radial-gradient(circle at 20% 20%, #1f2751 0, transparent 40%),
+          radial-gradient(circle at 80% 10%, #341757 0, transparent 35%),
+          var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+      }
+
+      .wrap {
+        width: min(1050px, 100%);
+      }
+
+      h1 {
+        text-align: center;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        margin: 0 0 1rem;
+        text-shadow: 0.16rem 0.16rem 0 #000;
+      }
+
+      .subtitle {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #c6d1ff;
+      }
+
+      .comic-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+      }
+
+      .panel {
+        position: relative;
+        background: linear-gradient(160deg, #212a52, var(--panel));
+        border: 4px solid #fff;
+        border-radius: 18px;
+        min-height: 230px;
+        padding: 1rem;
+        box-shadow: 0.45rem 0.45rem 0 #000;
+        overflow: hidden;
+      }
+
+      .panel::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 6px,
+          rgba(255, 255, 255, 0.03) 6px,
+          rgba(255, 255, 255, 0.03) 12px
+        );
+        pointer-events: none;
+      }
+
+      .label {
+        background: var(--yellow);
+        color: #242424;
+        display: inline-block;
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.86rem;
+        border: 2px solid #111;
+      }
+
+      .character {
+        width: 92px;
+        height: 92px;
+        border-radius: 50%;
+        margin-top: 0.9rem;
+        border: 4px solid #101010;
+        position: relative;
+        background: #ffc58f;
+      }
+
+      .character::before,
+      .character::after {
+        content: "";
+        position: absolute;
+        top: 36px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #111;
+      }
+
+      .character::before { left: 24px; }
+      .character::after { right: 24px; }
+
+      .smile {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 20px;
+        width: 35px;
+        height: 18px;
+        border-bottom: 4px solid #111;
+        border-radius: 0 0 30px 30px;
+      }
+
+      .speech {
+        position: absolute;
+        right: 0.8rem;
+        top: 3rem;
+        width: 58%;
+        background: #fff;
+        color: #1a1a1a;
+        border-radius: 1rem;
+        border: 3px solid #111;
+        padding: 0.75rem;
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+
+      .speech::after {
+        content: "";
+        position: absolute;
+        left: -12px;
+        bottom: 18px;
+        border-right: 14px solid #111;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+      }
+
+      .speech::before {
+        content: "";
+        position: absolute;
+        left: -8px;
+        bottom: 20px;
+        border-right: 12px solid #fff;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        z-index: 2;
+      }
+
+      .splash {
+        position: absolute;
+        bottom: -20px;
+        left: -10px;
+        right: -10px;
+        height: 80px;
+        background: radial-gradient(circle at 20% 40%, #88f5ff 10%, #2ba8d6 65%, #0f6d9e 100%);
+        border-top: 4px solid #f8fdff;
+        border-radius: 40% 60% 0 0 / 50% 50% 0 0;
+      }
+
+      .big-joke {
+        text-align: center;
+        margin-top: 1.5rem;
+        padding: 1.15rem;
+        background: linear-gradient(90deg, #2d2a73, #5f1f73);
+        border-radius: 16px;
+        border: 3px solid #fff;
+        box-shadow: 0.35rem 0.35rem 0 #000;
+      }
+
+      .arabic {
+        direction: rtl;
+        font-size: clamp(1.05rem, 2.4vw, 1.45rem);
+        color: #fff;
+        margin-bottom: 0.4rem;
+      }
+
+      .english {
+        color: #dce4ff;
+        margin: 0;
+      }
+
+      .bug-burst {
+        display: inline-block;
+        color: var(--accent);
+        text-shadow: 0 0 6px rgba(107, 230, 255, 0.7);
+        animation: pop 900ms ease-in-out infinite alternate;
+      }
+
+      @keyframes pop {
+        from { transform: scale(1); }
+        to { transform: scale(1.1) rotate(-3deg); color: var(--accent-2); }
+      }
+
+      button {
+        margin-top: 1rem;
+        display: block;
+        margin-inline: auto;
+        border: 3px solid #111;
+        background: #ffe66b;
+        color: #111;
+        border-radius: 12px;
+        padding: 0.55rem 1rem;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      button:hover { transform: translateY(-2px); }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>🧪 The Legend of <span class="bug-burst">Bug Bug Bug</span></h1>
+      <p class="subtitle">A tiny comic for every QA hero who ships chaos into production 👀</p>
+
+      <section class="comic-grid">
+        <article class="panel">
+          <span class="label">Panel 1</span>
+          <div class="character"><span class="smile"></span></div>
+          <div class="speech">"I test everything. Even my coffee has test cases."</div>
+        </article>
+
+        <article class="panel">
+          <span class="label">Panel 2</span>
+          <div class="character" style="background:#f7b9ff"><span class="smile"></span></div>
+          <div class="speech">"Prod is calm... suspiciously calm..."</div>
+        </article>
+
+        <article class="panel">
+          <span class="label">Panel 3</span>
+          <div class="character" style="background:#8dffe3"><span class="smile"></span></div>
+          <div class="speech" id="chantBubble">"بج... بج... بج..."</div>
+          <div class="splash"></div>
+        </article>
+      </section>
+
+      <section class="big-joke">
+        <div class="arabic">مرة تيسرت كان بيغرق قعد يقول بج بج بح</div>
+        <p class="english">"Once a tester was drowning, he kept saying: bug bug bug."</p>
+        <button id="hypeBtn">Make it louder 🔊</button>
+      </section>
+    </main>
+
+    <script>
+      const button = document.getElementById('hypeBtn');
+      const bubble = document.getElementById('chantBubble');
+      const chants = ['بج بج بج!!!', 'BUG BUG BUG!!!', '🐞 BUG 🐞 BUG 🐞 BUG 🐞'];
+      let i = 0;
+
+      button.addEventListener('click', () => {
+        i = (i + 1) % chants.length;
+        bubble.textContent = `"${chants[i]}"`;
+      });
+    </script>
+  </body>
+</html>
