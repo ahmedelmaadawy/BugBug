@@ -15,8 +15,9 @@ No framework, no build, no external libraries.
 1. Push this folder to a GitHub repository.
 2. Go to **Settings → Pages**.
 3. In **Build and deployment**, choose:
-   - **Source:** **GitHub Actions**
-4. Push any commit (or run the workflow manually).
+   - **Source:** Deploy from a branch
+   - **Branch:** `main` (or your default branch), folder `/ (root)`
+4. Save.
 5. Wait 1–2 minutes, then open:
    - `https://<your-username>.github.io/<repo-name>/`
 
@@ -38,11 +39,3 @@ Arabic (kept exact):
 English meaning:
 
 `Once a tester was drowning… he kept saying: bug bug bug.`
-
-## Troubleshooting (if you still see the old site)
-
-1. In **Settings → Pages**, make sure **Source = GitHub Actions** (not "Deploy from branch").
-2. Open the latest run in **Actions → Deploy static site to GitHub Pages** and confirm it is green.
-3. Hard refresh your browser (`Ctrl+Shift+R` / `Cmd+Shift+R`) or open in an incognito tab.
-4. Wait 1–3 minutes after a successful run, then reload.
-5. If needed, run the workflow manually from **Actions → Run workflow**.
