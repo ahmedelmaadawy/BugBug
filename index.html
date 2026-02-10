@@ -249,55 +249,114 @@
       <section class="big-joke">
         <div class="arabic">مرة تيستر كان بيغرق قعد يقول بج بج بج</div>
         <p class="english">"Once a tester was drowning, he kept saying: bug bug bug."</p>
-        <button id="hypeBtn">Make it louder 🔊</button>
+        <button id="hypeBtn" type="button">Say “bug bug bug” 🔊</button>
+        <p class="subtitle" id="audioStatus" style="margin-top:.75rem;margin-bottom:0;font-size:.95rem"></p>
       </section>
     </main>
 
-        <script>
-      const button = document.getElementById('hypeBtn');
-      const bubble = document.getElementById('chantBubble');
-      // Say only "bug bug bug" (audio), while keeping the on-screen chant Arabic.
-      const spokenBug = 'bug bug bug';
-      const chants = ['بج بج بج!!!', 'BUG BUG BUG!!!', '🐞 BUG 🐞 BUG 🐞 BUG 🐞'];
+    <script>
+      const button = document.getElementById("hypeBtn");
+      const bubble = document.getElementById("chantBubble");
+      const statusEl = document.getElementById("audioStatus");
+
+      const spokenBug = "bug bug bug";
+      const chants = ["بج بج بج!!!", "BUG BUG BUG!!!", "🐞 BUG 🐞 BUG 🐞 BUG 🐞"];
       let i = 0;
 
-      function pickVoice(langStartsWith) {
-        const voices = window.speechSynthesis.getVoices();
-        const target = (langStartsWith || '').toLowerCase();
-        return voices.find(v => (v.lang || '').toLowerCase().startsWith(target)) || null;
+      function setStatus(text) {
+        if (!statusEl) return;
+        statusEl.textContent = text || "";
+      }
+
+      const supportsTts =
+        "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+      const synth = supportsTts ? window.speechSynthesis : null;
+
+      function pickVoice(voices, langStartsWith) {
+        const target = (langStartsWith || "").toLowerCase();
+        return (
+          voices.find((v) => (v.lang || "").toLowerCase().startsWith(target)) ||
+          null
+        );
       }
 
       let cachedVoice = null;
       function refreshVoice() {
-        if (!('speechSynthesis' in window)) return;
-        // Prefer an English voice so it sounds like "bug" not "بج".
-        cachedVoice = pickVoice('en-US') || pickVoice('en');
-      }
-      if ('speechSynthesis' in window) {
-        refreshVoice();
-        window.speechSynthesis.addEventListener('voiceschanged', refreshVoice);
+        if (!synth) return;
+        const voices = synth.getVoices ? synth.getVoices() : [];
+        cachedVoice = pickVoice(voices, "en-US") || pickVoice(voices, "en");
       }
 
-      button.addEventListener('click', () => {
-        i = (i + 1) % chants.length;
-        bubble.textContent = `"${chants[i]}"`;
+      function ensureVoicesReady() {
+        if (!synth) return Promise.resolve();
 
-        if (!('speechSynthesis' in window)) {
-          return;
-        }
-
-        window.speechSynthesis.cancel();
         refreshVoice();
+        const voices = synth.getVoices ? synth.getVoices() : [];
+        if (voices.length) return Promise.resolve();
 
-        const u = new SpeechSynthesisUtterance(spokenBug);
-        u.lang = 'en-US';
+        return new Promise((resolve) => {
+          let settled = false;
+          const done = () => {
+            if (settled) return;
+            settled = true;
+            refreshVoice();
+            resolve();
+          };
+
+          // Different browsers expose this in different ways.
+          if (typeof synth.addEventListener === "function") {
+            try {
+              synth.addEventListener("voiceschanged", done, { once: true });
+            } catch (e) {}
+          }
+          if ("onvoiceschanged" in synth) {
+            try {
+              synth.onvoiceschanged = done;
+            } catch (e) {}
+          }
+
+          // Fallback: don't wait forever.
+          setTimeout(done, 600);
+        });
+      }
+
+      function speak(text) {
+        if (!synth) return;
+        try {
+          synth.cancel();
+        } catch (e) {}
+        try {
+          synth.resume();
+        } catch (e) {}
+
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = "en-US";
         u.rate = 0.95;
         u.pitch = 1.05;
-        u.voice = cachedVoice || u.voice;
+        if (cachedVoice) u.voice = cachedVoice;
 
-        // Some browsers keep speech synthesis paused until resumed after a user gesture.
-        try { window.speechSynthesis.resume(); } catch (e) {}
-        window.speechSynthesis.speak(u);
+        u.onerror = () => {
+          setStatus("Audio blocked. Unmute the tab / check system volume, then try again.");
+        };
+        u.onend = () => setStatus("");
+
+        synth.speak(u);
+      }
+
+      if (!supportsTts) {
+        setStatus("Your browser doesn't support text-to-speech on this page.");
+      } else {
+        refreshVoice();
+        setStatus("Tip: if you hear nothing, unmute the tab and check your system volume.");
+      }
+
+      button?.addEventListener("click", () => {
+        i = (i + 1) % chants.length;
+        if (bubble) bubble.textContent = `"${chants[i]}"`;
+
+        if (!supportsTts) return;
+
+        ensureVoicesReady().then(() => speak(spokenBug));
       });
     </script>
   </body>
