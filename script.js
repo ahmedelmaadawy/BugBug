@@ -1,6 +1,5 @@
 const funnierBtn = document.getElementById('funnierBtn');
 const langToggleBtn = document.getElementById('langToggleBtn');
-const playAudioBtn = document.getElementById('playAudioBtn');
 const bugCountEl = document.getElementById('bugCount');
 const panel2 = document.getElementById('panel2');
 const panel3 = document.getElementById('panel3');
@@ -81,22 +80,6 @@ function toggleLanguageMode() {
   }
 }
 
-
-function playPunchlineAudio() {
-  const phrase = 'مرة تيستر كان بيغرق قعد يقول بج بج بج';
-
-  if (!('speechSynthesis' in window)) {
-    alert('Audio playback is not supported in this browser.');
-    return;
-  }
-
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(phrase);
-  utterance.lang = 'ar-EG';
-  utterance.rate = 0.95;
-  utterance.pitch = 1;
-  window.speechSynthesis.speak(utterance);
-}
 function attachCounterHandlers(element) {
   element.addEventListener('click', bumpCounter);
   element.addEventListener('keydown', (event) => {
@@ -109,7 +92,5 @@ function attachCounterHandlers(element) {
 
 funnierBtn.addEventListener('click', makeItFunnier);
 langToggleBtn.addEventListener('click', toggleLanguageMode);
-playAudioBtn.addEventListener('click', playPunchlineAudio);
-panel3.addEventListener('dblclick', playPunchlineAudio);
 attachCounterHandlers(panel2);
 attachCounterHandlers(panel3);
