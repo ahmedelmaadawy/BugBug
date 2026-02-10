@@ -256,9 +256,7 @@
         <script>
       const button = document.getElementById('hypeBtn');
       const bubble = document.getElementById('chantBubble');
-      const arabicPrefix = 'مرة تيستر كان بيغرق قعد يقول';
-      // Keep a *single* utterance so it sounds like the same person/voice.
-      // We *say* "bug bug bug" in Latin letters to get the English /g/ sound, while still showing "بج بج بج" on-screen.
+      // Say only "bug bug bug" (audio), while keeping the on-screen chant Arabic.
       const spokenBug = 'bug bug bug';
       const chants = ['بج بج بج!!!', 'BUG BUG BUG!!!', '🐞 BUG 🐞 BUG 🐞 BUG 🐞'];
       let i = 0;
@@ -272,7 +270,8 @@
       let cachedVoice = null;
       function refreshVoice() {
         if (!('speechSynthesis' in window)) return;
-        cachedVoice = pickVoice('ar') || pickVoice('en');
+        // Prefer an English voice so it sounds like "bug" not "بج".
+        cachedVoice = pickVoice('en-US') || pickVoice('en');
       }
       if ('speechSynthesis' in window) {
         refreshVoice();
@@ -288,12 +287,16 @@
         }
 
         window.speechSynthesis.cancel();
-        const spoken = `${arabicPrefix}... ${spokenBug}`;
-        const u = new SpeechSynthesisUtterance(spoken);
-        u.lang = 'ar-EG';
+        refreshVoice();
+
+        const u = new SpeechSynthesisUtterance(spokenBug);
+        u.lang = 'en-US';
         u.rate = 0.95;
         u.pitch = 1.05;
-        u.voice = cachedVoice || pickVoice('ar') || u.voice;
+        u.voice = cachedVoice || u.voice;
+
+        // Some browsers keep speech synthesis paused until resumed after a user gesture.
+        try { window.speechSynthesis.resume(); } catch (e) {}
         window.speechSynthesis.speak(u);
       });
     </script>
