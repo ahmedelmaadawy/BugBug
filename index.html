@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -247,21 +247,54 @@
       </section>
 
       <section class="big-joke">
-        <div class="arabic">مرة تيسرت كان بيغرق قعد يقول بج بج بح</div>
+        <div class="arabic">مرة تيستر كان بيغرق قعد يقول بج بج بج</div>
         <p class="english">"Once a tester was drowning, he kept saying: bug bug bug."</p>
         <button id="hypeBtn">Make it louder 🔊</button>
       </section>
     </main>
 
-    <script>
+        <script>
       const button = document.getElementById('hypeBtn');
       const bubble = document.getElementById('chantBubble');
+      const arabicPrefix = 'مرة تيستر كان بيغرق قعد يقول';
+      // Keep a *single* utterance so it sounds like the same person/voice.
+      // We *say* "bug bug bug" in Latin letters to get the English /g/ sound, while still showing "بج بج بج" on-screen.
+      const spokenBug = 'bug bug bug';
       const chants = ['بج بج بج!!!', 'BUG BUG BUG!!!', '🐞 BUG 🐞 BUG 🐞 BUG 🐞'];
       let i = 0;
+
+      function pickVoice(langStartsWith) {
+        const voices = window.speechSynthesis.getVoices();
+        const target = (langStartsWith || '').toLowerCase();
+        return voices.find(v => (v.lang || '').toLowerCase().startsWith(target)) || null;
+      }
+
+      let cachedVoice = null;
+      function refreshVoice() {
+        if (!('speechSynthesis' in window)) return;
+        cachedVoice = pickVoice('ar') || pickVoice('en');
+      }
+      if ('speechSynthesis' in window) {
+        refreshVoice();
+        window.speechSynthesis.addEventListener('voiceschanged', refreshVoice);
+      }
 
       button.addEventListener('click', () => {
         i = (i + 1) % chants.length;
         bubble.textContent = `"${chants[i]}"`;
+
+        if (!('speechSynthesis' in window)) {
+          return;
+        }
+
+        window.speechSynthesis.cancel();
+        const spoken = `${arabicPrefix}... ${spokenBug}`;
+        const u = new SpeechSynthesisUtterance(spoken);
+        u.lang = 'ar-EG';
+        u.rate = 0.95;
+        u.pitch = 1.05;
+        u.voice = cachedVoice || pickVoice('ar') || u.voice;
+        window.speechSynthesis.speak(u);
       });
     </script>
   </body>
